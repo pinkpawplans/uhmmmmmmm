@@ -82,7 +82,7 @@ button{
   overflow-x:auto;
   white-space:pre;
   font-family:monospace;
-  font-size:11px;
+  font-size:14px;
 }
 
 @keyframes fadeIn{
@@ -177,7 +177,7 @@ function endGame(){
   clearInterval(gameInterval);
   clearInterval(heartInterval);
 
-  if(score>=1){
+  if(score>=10){
     showLetter();
   }else{
     alert("Almosttt 😌 try again!");
