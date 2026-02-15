@@ -95,7 +95,7 @@ button{
 <body>
 
 <div class="container" id="gameUI">
-  <h1>Catch 14 hearts in 10 seconds 💗</h1>
+  <h1>Catch 11 hearts in 10 seconds 💗</h1>
   <div id="score">Score: 0</div>
   <div id="timer">Time: 10</div>
   <button onclick="startGame()">Start</button>
@@ -174,7 +174,7 @@ function endGame(){
   clearInterval(gameInterval);
   clearInterval(heartInterval);
 
-  if(score>=14){
+  if(score>=11){
     showLetter();
   }else{
     alert("coba lagi yaa sayang wkwk 😌");
