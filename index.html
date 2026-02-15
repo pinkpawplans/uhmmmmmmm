@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catch My Heart 💗</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#ffe6f0,#fff0f5,#fff8dc);
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  transition:0.5s;
+}
+
+.container{
+  position:relative;
+  z-index:2;
+  padding:20px;
+}
+
+h1{
+  font-size:22px;
+  color:#ff4da6;
+  margin-bottom:10px;
+}
+
+#score, #timer{
+  font-size:16px;
+  margin:5px;
+  color:#d63384;
+}
+
+button{
+  padding:10px 20px;
+  border-radius:30px;
+  border:none;
+  background:#ff4da6;
+  color:white;
+  font-size:14px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.heart{
+  position:absolute;
+  font-size:26px;
+  cursor:pointer;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  from{transform:translateY(-10vh);}
+  to{transform:translateY(110vh);}
+}
+
+/* Love Letter UPDATED */
+#letter{
+  display:none;
+  width:90%;
+  max-width:650px;
+  background:rgba(255,255,255,0.95);
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 10px 40px rgba(255,105,180,0.25);
+  text-align:left;
+  line-height:1.6;
+  color:#555;
+  animation:fadeIn 1.2s ease forwards;
+
+  overflow-x:auto;
+  white-space:pre;
+  font-family:monospace;
+  font-size:11px;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="gameUI">
+  <h1>Catch 10 hearts in 10 seconds 💗</h1>
+  <div id="score">Score: 0</div>
+  <div id="timer">Time: 10</div>
+  <button onclick="startGame()">Start</button>
+</div>
+
+<div id="letter">
+  <h2 style="color:#ff4da6; font-family:'Segoe UI',sans-serif;">Yeaaay you did it Sayang 💗</h2>
+  <p>
+ Iniii bunga digital buat Rifky hehe 💗
+    
+⠀⠀🌺🏵️⠀⠀⠀⠀❀🌺🏵️
+⠀🏵️🪻🏵️🌺🌺🏵️❀🌺
+⠀⠀🌺❀🌷🧸🪻🌷🏵️
+⠀⠀⠀🏵️🌺🌺❀🏵️🌺
+⠀∧,,,∧🌷🪻🌺❀
+(⠀>⩊^⠀⠀❀🏵️❀
+ヽ⠀つ⠀＼⠀⠀⠀／
+ ⠀UU⠀⠀⠀/🎀＼
+
+⬜⬜🌸⬜⬜⬜⬜⬜⬜⬜⬜⬜🌸⬜⬜
+⬜⬜⬜⬜⬜⬜🌸⬜⬜⬜⬜⬜⬜⬜⬜
+⬜⬜⬜⬛⬛⬛⬜🌸⬜⬛⬛⬛⬜⬜⬜
+⬜⬜⬛🌸🌸🌸⬛⬜⬛🌸🌸🌸⬛⬜⬜
+⬜⬛🌸🌸🌸🌸🌸⬛🌸🌸🌸🌸🌸⬛⬜
+⬜⬛🌸🌸🌸🌸🌸⬛🌸🌸🌸🌸🌸⬛⬜
+⬜⬛🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸⬛⬜
+⬜⬛🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸⬛⬜
+⬜⬜⬛🌸🌸🌸🌸🌸🌸🌸🌸🌸⬛⬜⬜
+⬜⬜⬜⬛🌸🌸🌸🌸🌸🌸🌸⬛⬜⬜⬜
+⬜⬜⬜⬜⬛🌸🌸🌸🌸🌸⬛⬜⬜⬜⬜
+⬜🌸⬜🌸⬜⬛🌸🌸🌸⬛⬜🌸⬜🌸⬜
+🌸🌸🌸🌸🌸⬜⬛🌸⬛⬜⬜⬜🌸⬜⬜
+⬜🌸🌸🌸⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜🌸
+⬜⬜🌸⬜⬜⬜- maisye cantik⬜⬜⬜
+  </p>
+</div>
+
+<script>
+let score=0;
+let timeLeft=10;
+let gameInterval;
+let heartInterval;
+
+function startGame(){
+  score=0;
+  timeLeft=10;
+  document.getElementById("score").innerText="Score: 0";
+  document.getElementById("timer").innerText="Time: 10";
+
+  heartInterval=setInterval(createHeart,500);
+
+  gameInterval=setInterval(()=>{
+    timeLeft--;
+    document.getElementById("timer").innerText="Time: "+timeLeft;
+    if(timeLeft<=0){
+      endGame();
+    }
+  },1000);
+}
+
+function createHeart(){
+  let heart=document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML="💗";
+  heart.style.left=Math.random()*90+"vw";
+  heart.style.animationDuration=(Math.random()*2+2)+"s";
+
+  heart.onclick=function(){
+    score++;
+    document.getElementById("score").innerText="Score: "+score;
+    heart.remove();
+  };
+
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),5000);
+}
+
+function endGame(){
+  clearInterval(gameInterval);
+  clearInterval(heartInterval);
+
+  if(score>=1){
+    showLetter();
+  }else{
+    alert("Almosttt 😌 try again!");
+  }
+}
+
+function showLetter(){
+  document.getElementById("gameUI").style.display="none";
+  document.getElementById("letter").style.display="block";
+  document.body.style.background="linear-gradient(135deg,#ffb6d9,#ffe6f5)";
+}
+</script>
+
+</body>
+</html>
